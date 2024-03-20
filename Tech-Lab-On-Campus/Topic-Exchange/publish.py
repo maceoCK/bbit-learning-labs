@@ -24,7 +24,7 @@ def main(ticker: str, price: float, sector: str) -> None:
     #
     #                       WRITE CODE HERE!!!
     #
-
+    routingKey = "#." + ticker + "." + sector + ".#"
 
     producer = mqProducer(routing_key=routingKey,exchange_name="Tech Lab Topic Exchange")
 
@@ -34,7 +34,7 @@ def main(ticker: str, price: float, sector: str) -> None:
     #                       WRITE CODE HERE!!!
     #
     
-    
+    message = ticker + " in " + sector + " is at " + price
     producer.publishOrder(message)
 
 if __name__ == "__main__":
@@ -43,5 +43,10 @@ if __name__ == "__main__":
     #
     #                       WRITE CODE HERE!!!
     #
-
-    sys.exit(main(ticker,price,sector))
+    if len(sys.argv) > 2:
+        ticker = sys.argv[0]
+        price = sys.argv[1]
+        sector = sys.argv[2] 
+        sys.exit(main(ticker,price,sector))
+    else:
+        print("wrong usage")

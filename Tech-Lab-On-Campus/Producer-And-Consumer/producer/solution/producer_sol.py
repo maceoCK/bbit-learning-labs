@@ -17,6 +17,9 @@ class mqProducer(mqProducerInterface):
         # Establish Channel
         self.channel = self.connection.channel()
         # Create the exchange if not already present
+        self.channel.exchange_declare(
+            exhange=self.exchange_name,exchange_type='topic'
+        )
         self.channel.exchange_declare(self.exchange_name)
 
     def publishOrder(self, message: str) -> None:
