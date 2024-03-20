@@ -17,11 +17,11 @@ class mqProducer(mqProducerInterface):
         # Establish Channel
         self.channel = self.connection.channel()
         # Create the exchange if not already present
-        self.channel.exchange_declare('Test Exchange')
+        self.channel.exchange_declare(self.exchange_name)
 
     def publishOrder(self, message: str) -> None:
         # Basic Publish to Exchange
-        self.channel.basic_publish('Test Exchange', 'Test Route', message)
+        self.channel.basic_publish(self.exchange_name, self.routing_key, message)
         # Close Channel
         self.channel.close()
         # Close Connection
